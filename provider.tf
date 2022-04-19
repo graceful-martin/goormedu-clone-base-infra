@@ -27,9 +27,7 @@ module "network" {
     source = "./prod/network"
 }
 
-/* SSM KEY GEN
 module "security" {
     source = "./prod/security"
     ssm-env = var.env
-} 
-*/
+}
