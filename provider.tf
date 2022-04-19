@@ -22,15 +22,11 @@ variable "env" {
 }
 
 module "network" {
-    source = "./global/network"
+    source = "./prod/network"
 }
 
 /* SSM KEY GEN
 module "security" {
-    source = "./global/security"
+    source = "./prod/security"
     ssm-env = var.env
 } */
-
-module "prod-backend" {
-    source = "./prod/backend"
-}
