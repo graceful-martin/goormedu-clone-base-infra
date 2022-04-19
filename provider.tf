@@ -10,8 +10,9 @@ terraform {
 }
 
 provider "aws" {
-    profile = "default"
-    region  = "ap-northeast-2"
+    access_key = "${var.aws_access_key}"
+    secret_key = "${var.aws_secret_key}"
+    region  = lookup(var.env, "AWS_REGION", "wrong_value")
 }
 
 variable "env" { 
