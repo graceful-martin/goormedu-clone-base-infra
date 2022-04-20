@@ -4,7 +4,7 @@ data "aws_route53_zone" "route53-zone" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name      = "goormedu-clone.com"
+  domain_name       = "goormedu-clone.com"
   validation_method = "DNS"
 
   tags = {
