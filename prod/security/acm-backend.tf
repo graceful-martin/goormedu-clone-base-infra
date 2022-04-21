@@ -3,7 +3,7 @@ data "aws_route53_zone" "route53-zone" {
   private_zone = false
 }
 
-resource "aws_acm_certificate" "cert" {
+resource "aws_acm_certificate" "api-cert" {
   domain_name       = "api.goormedu-clone.com"
   validation_method = "DNS"
 
@@ -16,14 +16,14 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
-resource "aws_acm_certificate_validation" "example" {
-  certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.route53-record : record.fqdn]
+resource "aws_acm_certificate_validation" "api-cert-valid" {
+  certificate_arn         = aws_acm_certificate.api-cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.api-route53-record : record.fqdn]
 }
 
-resource "aws_route53_record" "route53-record" {
+resource "aws_route53_record" "api-route53-record" {
   for_each = {
-    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.api-cert-valid.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
