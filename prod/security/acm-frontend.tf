@@ -1,4 +1,4 @@
-resource "aws_acm_certificate" "cert" {
+resource "aws_acm_certificate" "root-cert" {
   domain_name       = "goormedu-clone.com"
   validation_method = "DNS"
 
@@ -18,7 +18,7 @@ resource "aws_acm_certificate_validation" "root-cert-valid" {
 
 resource "aws_route53_record" "root-route53-record" {
   for_each = {
-    for dvo in aws_acm_certificate.root-cert-valid.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.root-cert.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
