@@ -12,7 +12,7 @@ resource "aws_acm_certificate" "root-cert" {
 }
 
 resource "aws_acm_certificate_validation" "root-cert-valid" {
-  certificate_arn         = aws_acm_certificate.cert.arn
+  certificate_arn         = aws_acm_certificate.root-cert.arn
   validation_record_fqdns = [for record in aws_route53_record.root-route53-record : record.fqdn]
 }
 
